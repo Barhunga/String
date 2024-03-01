@@ -30,9 +30,8 @@ public:
 	char& operator[](size_t _index);
 	const char& operator[](size_t _index) const;
 private:
-	/*
-	* Put your internal data structures and members here
-	*/
+	char* _string;
+	unsigned int _length;
 };
 #endif
 
