@@ -1,3 +1,4 @@
+//#define _CRT_SECURE_NO_WARNINGS
 #include "String.h"
 #include <iostream>
 using namespace std;
@@ -15,8 +16,8 @@ String::String(const char* _str) {
 	for (size_t i = 0; i < Length(); i++) {
 		_string[i] = _str[i];
 	}
-	//strcpy(_string, _str);
-	cout << "2nd contstructor called\n";
+	//strcpy(_string, _str);			   //    <- Alternative with _CRT_SECURE_NO_WARNINGS
+	cout << "2nd constructor called\n";
 }
 
 // Constructor?????????
@@ -25,9 +26,9 @@ String::String(const String& _other) {
 	for (size_t i = 0; i < Length(); i++) {
 		_string[i] = _other[i];                
 	}
-	//strcpy(_string, _other._string);
-	//_string = _other._string;
-	cout << "3rd contstructor called\n";
+	//strcpy(_string, _other._string);	   //    <- Alternative with _CRT_SECURE_NO_WARNINGS
+	//_string = _other._string;			   //    <- Alternative (needs testing)
+	cout << "3rd constructor called\n";
 }
 
 // Destructor
@@ -77,7 +78,7 @@ bool String::EqualTo(const String& _other) const
 		}
 	}
 	return true;
-	//if (strcmp(_string, _other._string) == 0) {
+	//if (strcmp(_string, _other._string) == 0) {	//	<- Alternative
 	//	return true;
 	//}
 	//return false;
@@ -99,15 +100,28 @@ const char* String::CStr() const
 	return _string;
 }
 
-//String& String::ToLower()
-//{
-//	// TODO: insert return statement here
-//}
-//
-//String& String::ToUpper()
-//{
-//	// TODO: insert return statement here
-//}
+// Return 
+String& String::ToLower()
+{
+	for (int i = 0; i < Length(); i++) {
+		if (_string[i] >= 65 && _string[i] <= 92) { // If uppercase character
+			_string[i] += 32;
+		}
+		//_string[i] = tolower(_string[i]);   //  <- Alternative
+	}
+	return *this;
+}
+
+String& String::ToUpper()
+{
+	for (int i = 0; i < Length(); i++) {
+		if (_string[i] >= 97 && _string[i] <= 122) { // If lowercase character
+			_string[i] -= 32;
+		}
+		//_string[i] = toupper(_string[i]);   //  <- Alternative
+	}
+	return *this;
+}
 //
 //size_t String::Find(const String& _str)
 //{
@@ -123,17 +137,20 @@ const char* String::CStr() const
 //{
 //	// TODO: insert return statement here
 //}
-//
+
+// Wait for input in the console window and store the result
 //String& String::ReadFromConsole()
 //{
 //	// TODO: insert return statement here
 //}
-//
-//String& String::WriteToConsole()
-//{
-//	// TODO: insert return statement here
-//}
-//
+
+// Write the string to the console window.
+String& String::WriteToConsole()
+{
+	cout << _string << endl;
+	return *this;
+}
+
 //bool String::operator==(const String& _other)
 //{
 //	return false;
