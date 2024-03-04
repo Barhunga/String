@@ -1,4 +1,4 @@
-//#define _CRT_SECURE_NO_WARNINGS
+//#define _CRT_SECURE_NO_WARNINGS         // for use with strcpy
 #include "String.h"
 #include <iostream>
 using namespace std;
@@ -58,7 +58,7 @@ char& String::CharacterAt(size_t _index)
 	}
 }
 
-// Returns character at _index for const version
+// Returns character at _index (const version)
 const char& String::CharacterAt(size_t _index) const
 {
 	if (_index >= 0 && _index < Length()) {
@@ -139,10 +139,14 @@ String& String::ToUpper()
 //}
 
 // Wait for input in the console window and store the result
-//String& String::ReadFromConsole()
-//{
-//	// TODO: insert return statement here
-//}
+String& String::ReadFromConsole()
+{
+	cout << "Enter string\n";
+	char input[1000];
+	cin.getline(input, 1000);  
+	*this = input; 
+	return *this;
+}
 
 // Write the string to the console window.
 String& String::WriteToConsole()
@@ -151,27 +155,37 @@ String& String::WriteToConsole()
 	return *this;
 }
 
-//bool String::operator==(const String& _other)
-//{
-//	return false;
-//}
-//
-//bool String::operator!=(const String& _other)
-//{
-//	return false;
-//}
-//
-//String& String::operator=(const String& _str)
-//{
-//	// TODO: insert return statement here
-//}
+//  Returns true if lhs == rhs
+bool String::operator==(const String& _other)
+{
+	return EqualTo(_other) == 0;
+}
 
-// operator[] overload
+// Returns true if lhs != rhs
+bool String::operator!=(const String& _other)
+{
+	return !(*this == _other);
+}
+
+// Replaces the characters in lhs with the characters in rhs
+String& String::operator=(const String& _str)
+{
+	delete[] _string;
+	_string = new char[_str.Length() + 1];
+	for (size_t i = 0; i < Length(); i++) { 
+		_string[i] = _str[i]; 
+	} 
+	//strcpy(_string, _str._string);			 // Alternative with _CRT_SECURE_NO_WARNINGS
+	return *this;
+}
+
+// Returns the character located at index
 char& String::operator[](size_t _index)
 {
 	return _string[_index];
 }
 
+// Returns the character located at index (const version)
 const char& String::operator[](size_t _index) const
 {
 	return _string[_index];
