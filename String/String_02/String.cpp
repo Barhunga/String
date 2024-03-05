@@ -1,4 +1,4 @@
-//#define _CRT_SECURE_NO_WARNINGS         // for use with strcpy
+//#define _CRT_SECURE_NO_WARNINGS         // for use with strcpy and strcat
 #include "String.h"
 #include <iostream>
 using namespace std;
@@ -20,7 +20,7 @@ String::String(const char* _str) {
 	cout << "2nd constructor called\n";
 }
 
-// Constructor?????????
+// Copy constructor?????????
 String::String(const String& _other) {
 	_string = new char[_other.Length() + 1];
 	for (size_t i = 0; i < Length(); i++) {
@@ -84,15 +84,55 @@ bool String::EqualTo(const String& _other) const
 	//return false;
 }
 
-//String& String::Append(const String& _str)
-//{
-//	// TODO: insert return statement here
-//}
-//
-//String& String::Prepend(const String& _str)
-//{
-//	// TODO: insert return statement here
-//}
+// Adds str to the end of the string
+String& String::Append(const String& _str)
+{
+	// Create new empty string with length of both strings combined 
+	size_t new_length = Length() + _str.Length();
+	char* new_string = new char[new_length + 1];
+
+	// Copy first string to the new string
+	for (size_t i = 0; i < Length(); i++) {  
+		new_string[i] = _string[i];
+	}
+	// strcpy(new_string, _string);       //  <- Alternative with _CRT_SECURE_NO_WARNINGS
+	
+	// Copy second string to index after first string in the new string
+	for (size_t i = 0; i < new_length; i++) { 
+		new_string[i + Length()] = _str[i];
+	}
+	 //strcat(new_string, _str._string);  //  <- Alternative with _CRT_SECURE_NO_WARNINGS
+
+	// Delete old string data, assign string to the new string created
+	delete[] _string;
+	_string = new_string;
+	return *this;
+}
+
+// Adds str to the beginning of the string
+String& String::Prepend(const String& _str)
+{
+	// Create new empty string with length of both strings combined 
+	size_t new_length = Length() + _str.Length(); 
+	char* new_string = new char[new_length + 1]; 
+
+	// Copy second string to the new string 
+	for (size_t i = 0; i < _str.Length(); i++) {
+		new_string[i] = _str[i]; 
+	}
+	 //strcpy(new_string, _str._string);  //  <- Alternative with _CRT_SECURE_NO_WARNINGS
+
+	// Copy first string to index after second string in the new string
+	for (size_t i = 0; i < new_length; i++) {  
+		new_string[i + _str.Length()] = _string[i]; 
+	}
+	 //strcat(new_string, _string);       //  <- Alternative with _CRT_SECURE_NO_WARNINGS
+
+	// Delete old string data, assign string to the new string created
+	delete[] _string; 
+	_string = new_string; 
+	return *this;
+}
 
 // Return the const char * that is useable with std::cout
 const char* String::CStr() const

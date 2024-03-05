@@ -37,6 +37,16 @@ int main()
 	cout << "\nPrinting whether or not the string is the same as the input\n";
 	cout << test_02->EqualTo("Dragon elmo 2") << endl;
 
+	// Adding another string to the end of a string
+	cout << "\nAdding another string to the end of a string\n";
+	test_02->Append(test_03->CStr()); 
+	cout << test_02->CStr() << endl;	
+	
+	// Adding another string to the start of a string
+	cout << "\nAdding another string to the start of a string\n";
+	test_02->Prepend(test_03->CStr());  
+	cout << test_02->CStr() << endl; 
+
 	// Converting string to upper case and then printing it
 	cout << "\nPrinting string in upper case\n";
 	test_02->ToUpper();
