@@ -31,7 +31,6 @@ public:
 	const char& operator[](size_t _index) const;
 private:
 	char* _string;
-	unsigned int _length;
 };
 #endif
 

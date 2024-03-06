@@ -7,7 +7,7 @@ using namespace std;
 String::String() {
 	_string = new char[1];
 	_string[0] = '\0';
-	cout << "default constructor called\n";
+	//cout << "default constructor called\n";
 }
 
 // Constructor for characters
@@ -17,30 +17,30 @@ String::String(const char* _str) {
 		_string[i] = _str[i];
 	}
 	//strcpy(_string, _str);			   //    <- Alternative with _CRT_SECURE_NO_WARNINGS
-	cout << "2nd constructor called\n";
+	//cout << "2nd constructor called\n";
 }
 
-// Copy constructor?????????
+// Copy constructor
 String::String(const String& _other) {
 	_string = new char[_other.Length() + 1];
 	for (size_t i = 0; i < Length(); i++) {
 		_string[i] = _other[i];                
 	}
 	//strcpy(_string, _other._string);	   //    <- Alternative with _CRT_SECURE_NO_WARNINGS
-	//_string = _other._string;			   //    <- Alternative (needs testing)
-	cout << "3rd constructor called\n";
+	//cout << "copy constructor called\n";
 }
 
 // Destructor
 String::~String() {
 	delete[] _string;
 	_string = nullptr;
+	//cout << "destructor called\n";
 }
 
 // Returns an integer representing the length of the string
 size_t String::Length() const
 {
-	size_t _length = 0;
+	size_t _length = 0; 
 	for (int i = 0; _string[i] != '\0'; i++) {
 		_length++;
 	}
@@ -78,10 +78,10 @@ bool String::EqualTo(const String& _other) const
 		}
 	}
 	return true;
-	//if (strcmp(_string, _other._string) == 0) {	//	<- Alternative
-	//	return true;
-	//}
-	//return false;
+	if (strcmp(_string, _other._string) == 0) {	//	<- Alternative
+		return true;
+	}
+	return false;
 }
 
 // Adds str to the end of the string
@@ -145,7 +145,7 @@ String& String::ToLower()
 {
 	for (int i = 0; i < Length(); i++) {
 		if (_string[i] >= 65 && _string[i] <= 92) { // If uppercase character
-			_string[i] += 32;
+			_string[i] += 32; // Makes character lower case
 		}
 		//_string[i] = tolower(_string[i]);   //  <- Alternative
 	}
@@ -156,23 +156,53 @@ String& String::ToUpper()
 {
 	for (int i = 0; i < Length(); i++) {
 		if (_string[i] >= 97 && _string[i] <= 122) { // If lowercase character
-			_string[i] -= 32;
+			_string[i] -= 32; // Makes character upper case
 		}
 		//_string[i] = toupper(_string[i]);   //  <- Alternative
 	}
 	return *this;
 }
-//
-//size_t String::Find(const String& _str)
-//{
-//	return size_t();
-//}
-//
-//size_t String::Find(size_t _startIndex, const String& _str)
-//{
-//	return size_t();
-//}
-//
+
+// Returns the location of _str. If not found, return -1
+size_t String::Find(const String& _str)
+{
+	return Find(0, _str);
+}
+
+// Returns the location of _str beginning the search from startIndex. If not found, return -1
+size_t String::Find(size_t _startIndex, const String& _str)
+{
+	// Checking from the start index while it is less than the length of the string
+	for (size_t i = _startIndex; i < Length(); i++) {  
+
+		// If the character matches the first character of _str
+		if (_string[i] == _str[0]) {   
+			int success = 1;    
+
+			// From the next character until the last character of _str
+			for (size_t j = 1; j < _str.Length(); j++) {   
+
+				// Increment success counter if they match/break the loop if they don't
+				if (_string[i + j] == _str[j]) {   
+					success++;   
+				}
+				else break;
+			}
+			// If the amount of successful matches is the same as the length of _str, return the starting position of that success 
+			if (success == _str.Length()) {   
+				return i; 
+			}
+		}
+	}
+	// Return -1 if nothing matches completely
+	return -1;
+
+	//if (strstr(_string + _startIndex, _str._string) != nullptr); {    // <- Alternative
+	//	return strstr(_string + _startIndex, _str._string) - _string;
+	//}
+	//return -1;
+}
+
 //String& String::Replace(const String& _find, const String& _replace)
 //{
 //	// TODO: insert return statement here
@@ -198,7 +228,7 @@ String& String::WriteToConsole()
 //  Returns true if lhs == rhs
 bool String::operator==(const String& _other)
 {
-	return EqualTo(_other) == 0;
+	return EqualTo(_other) == 1;
 }
 
 // Returns true if lhs != rhs
