@@ -203,10 +203,51 @@ size_t String::Find(size_t _startIndex, const String& _str)
 	//return -1;
 }
 
-//String& String::Replace(const String& _find, const String& _replace)
-//{
-//	// TODO: insert return statement here
-//}
+// Replaces all occurrences of _find with _replace in a string
+String& String::Replace(const String& _find, const String& _replace)
+{
+	// If no instances are found, return the string
+	if (Find(_find) == -1) {  
+		return *this;
+	}
+	// Start loop ready to replace instances
+	size_t start_index = Find(_find); 
+	int found = 1;
+	while (start_index != -1) { 
+
+		// Create a new empty string with length accounting for the current replacement
+		size_t new_length = Length() - _find.Length() + _replace.Length() + 1; 
+		char* new_string = new char[new_length];
+
+		// Copy start of string to new string
+		for (size_t i = 0; i < start_index; i++) { 
+			new_string[i] = _string[i]; 
+		}
+
+		// Copy _replace where _find was
+		for (size_t i = start_index; i < start_index + _replace.Length(); i++) { 
+			new_string[i] = _replace[i - start_index];   
+		}
+
+		// Continue to copy the rest of the string as it was
+		for (size_t i = start_index + _replace.Length(); i < new_length; i++) {   
+			new_string[i] = _string[i - (_replace.Length() - _find.Length())];
+		}
+
+		// Delete old string data, assign string to the new string created
+		delete[] _string;
+		_string = new_string;
+
+		// Update found counter if there is another instance to replace
+		if (Find(start_index + _replace.Length(), _find) != -1) {  
+			found++;
+		}
+		// Set new start_index
+		start_index = Find(start_index + _replace.Length(), _find);  
+	}
+	cout << "Found and replaced " << found << " occurances\n"; 
+	return *this;
+}
 
 // Wait for input in the console window and store the result
 String& String::ReadFromConsole()

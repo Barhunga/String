@@ -20,9 +20,9 @@ int main()
 
 	// Printing function results
 	
-		// Print string
+	// Print string
 	cout << "\nPrinting string\n"; 
-	cout << test_02->CStr() << endl; 
+	cout << test_04->CStr() << endl; 
 	test_03->WriteToConsole();
 
 	// Print string length	
@@ -67,7 +67,14 @@ int main()
 	cout << "Printing location of fry in " << test_02->CStr() << " starting from index 8" << endl << test_02->Find(8, "fry") << endl;
 
 	// Replace a found string (within a string) with another string
+	cout << "\nReplace a found string (within a string) with another string\n";
+	cout << "Replacing all instances of fry with fries in " << test_02->CStr() << endl;  
+	test_02->Replace("fry", "fries"); 
+	cout << test_02->CStr() << endl << endl; 
 
+	cout << "Replacing all instances of fries with fry in " << test_02->CStr() << endl; 
+	test_02->Replace("fries", "fry");
+	cout << test_02->CStr() << endl;
 
 	// Printing an input from the console
 	cout << "\nPrinting an input from the console\n";
