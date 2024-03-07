@@ -78,10 +78,10 @@ bool String::EqualTo(const String& _other) const
 		}
 	}
 	return true;
-	if (strcmp(_string, _other._string) == 0) {	//	<- Alternative
-		return true;
-	}
-	return false;
+	//if (strcmp(_string, _other._string) == 0) {	//	<- Alternative
+	//	return true;
+	//}
+	//return false;
 }
 
 // Adds str to the end of the string
@@ -140,7 +140,7 @@ const char* String::CStr() const
 	return _string;
 }
 
-// Return 
+// Return string in lowercase
 String& String::ToLower()
 {
 	for (int i = 0; i < Length(); i++) {
@@ -152,6 +152,7 @@ String& String::ToLower()
 	return *this;
 }
 
+// Return string in uppercase
 String& String::ToUpper()
 {
 	for (int i = 0; i < Length(); i++) {
