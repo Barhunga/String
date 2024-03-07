@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "String.h"
 using namespace std;
 
@@ -20,76 +21,81 @@ int main()
 
 	// Printing function results
 
+	ofstream write_file;
+	write_file.open("Log.txt");
+
 	// Print string
-	cout << "\nPrinting string\n";
-	cout << test_04->CStr() << endl;
+	write_file << "\nPrinting string\n";
+	write_file << test_04->CStr() << endl;
 	test_03->WriteToConsole();
 
 	// Print string length	
-	cout << "\nPrinting string length\n";
-	cout << test_02->CStr() << ": " << test_02->Length() << endl;
+	write_file << "\nPrinting string length\n";
+	write_file << test_02->CStr() << ": " << test_02->Length() << endl;
 
 	// Print character at index
-	cout << "\nPrinting character at index\n";
-	cout << "Character at index 3 in " << test_02->CStr() << ": " << test_02->CharacterAt(3) << endl;
-	cout << "Character at index 4 in " << test_const->CStr() << ": " << test_const->CharacterAt(4) << endl;  // Calls const version of function
+	write_file << "\nPrinting character at index\n";
+	write_file << "Character at index 3 in " << test_02->CStr() << ": " << test_02->CharacterAt(3) << endl;
+	write_file << "Character at index 4 in " << test_const->CStr() << ": " << test_const->CharacterAt(4) << endl;  // Calls const version of function
 
 	// Print whether or not the string is the same as the input
-	cout << "\nPrinting whether or not the string is the same as the input\n";
-	cout << "Is " << test_02->CStr() << " == Dragon elmo 2? " << test_02->EqualTo("Dragon elmo 2") << endl;
-	cout << "Is " << test_02->CStr() << " == Dragon elmo 3? " << test_02->EqualTo("Dragon elmo 3") << endl;
+	write_file << "\nPrinting whether or not the string is the same as the input\n";
+	write_file << "Is " << test_02->CStr() << " == Dragon elmo 2? " << test_02->EqualTo("Dragon elmo 2") << endl;
+	write_file << "Is " << test_02->CStr() << " == Dragon elmo 3? " << test_02->EqualTo("Dragon elmo 3") << endl;
 
 	// Adding another string to the end of a string
-	cout << "\nAdding another string to the end of a string\n";
-	cout << "Adding " << test_03->CStr() << " to the end of " << test_02->CStr() << endl;
+	write_file << "\nAdding another string to the end of a string\n";
+	write_file << "Adding " << test_03->CStr() << " to the end of " << test_02->CStr() << endl;
 	test_02->Append(test_03->CStr());
-	cout << test_02->CStr() << endl;
+	write_file << test_02->CStr() << endl;
 
 	// Adding another string to the start of a string
-	cout << "\nAdding another string to the start of a string\n";
-	cout << "Adding " << test_03->CStr() << " to the start of " << test_02->CStr() << endl;
+	write_file << "\nAdding another string to the start of a string\n";
+	write_file << "Adding " << test_03->CStr() << " to the start of " << test_02->CStr() << endl;
 	test_02->Prepend(test_03->CStr());
-	cout << test_02->CStr() << endl;
+	write_file << test_02->CStr() << endl;
 
 	// Converting string to upper case and then printing it
-	cout << "\nPrinting string in upper case\n";
+	write_file << "\nPrinting string in upper case\n";
 	test_02->ToUpper();
-	cout << test_02->CStr() << endl;
+	write_file << test_02->CStr() << endl;
 
 	// Converting string to lower case and then printing it
-	cout << "\nPrinting string in lower case\n";
+	write_file << "\nPrinting string in lower case\n";
 	test_02->ToLower();
-	cout << test_02->CStr() << endl;
+	write_file << test_02->CStr() << endl;
 
 	// Find location of string in another string
-	cout << "\nPrinting location of string in another string\n";
-	cout << "Printing location of fry in " << test_02->CStr() << endl << test_02->Find("fry") << endl;
-	cout << "Printing location of fry in " << test_02->CStr() << " starting from index 8" << endl << test_02->Find(8, "fry") << endl;
+	write_file << "\nPrinting location of string in another string\n";
+	write_file << "Printing location of fry in " << test_02->CStr() << endl << test_02->Find("fry") << endl;
+	write_file << "Printing location of fry in " << test_02->CStr() << " starting from index 8" << endl << test_02->Find(8, "fry") << endl;
 
 	// Replace a found string (within a string) with another string
-	cout << "\nReplace a found string (within a string) with another string\n";
-	cout << "Replacing all instances of fry with fries in " << test_02->CStr() << endl;
+	write_file << "\nReplace a found string (within a string) with another string\n";
+	write_file << "Replacing all instances of fry with fries in " << test_02->CStr() << endl;
 	test_02->Replace("fry", "fries");
-	cout << test_02->CStr() << endl << endl;
+	write_file << test_02->CStr() << endl << endl;
 
-	cout << "Replacing all instances of fries with fry in " << test_02->CStr() << endl;
+	write_file << "Replacing all instances of fries with fry in " << test_02->CStr() << endl;
 	test_02->Replace("fries", "fry");
-	cout << test_02->CStr() << endl;
+	write_file << test_02->CStr() << endl;
 
 	// Printing an input from the console
-	cout << "\nPrinting an input from the console\n";
+	write_file << "\nPrinting an input from the console\n";
 	test_default->ReadFromConsole();
-	cout << test_default->CStr() << endl;
+	write_file << test_default->CStr() << endl;
 
 	// Printing if the string is the same as another string
-	cout << "\nPrinting if the string is the same as another string\n";
-	cout << "Is " << test_02->CStr() << " the same as " << test_03->CStr() << "? " << (*test_02 == *test_03) << endl;
-	cout << "Is " << test_02->CStr() << " NOT the same as " << test_03->CStr() << "? " << (*test_02 != *test_03) << endl;
+	write_file << "\nPrinting if the string is the same as another string\n";
+	write_file << "Is " << test_02->CStr() << " the same as " << test_03->CStr() << "? " << (*test_02 == *test_03) << endl;
+	write_file << "Is " << test_02->CStr() << " NOT the same as " << test_03->CStr() << "? " << (*test_02 != *test_03) << endl;
 
 	// Replacing one string as another
-	cout << "\nReplacing one string as another\n";
-	cout << "Replacing " << test_03->CStr() << " with " << test_default->CStr() << endl;
+	write_file << "\nReplacing one string as another\n";
+	write_file << "Replacing " << test_03->CStr() << " with " << test_default->CStr() << endl;
 	*test_03 = *test_default;
 	test_03->WriteToConsole();
+
+	write_file.close();
 
 }
