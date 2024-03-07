@@ -24,7 +24,7 @@ String::String(const char* _str) {
 String::String(const String& _other) {
 	_string = new char[_other.Length() + 1];
 	for (size_t i = 0; i < Length(); i++) {
-		_string[i] = _other[i];                
+		_string[i] = _other[i];            //    const [] overload - used in other functions also
 	}
 	//strcpy(_string, _other._string);	   //    <- Alternative with _CRT_SECURE_NO_WARNINGS
 	//cout << "copy constructor called\n";
@@ -65,7 +65,7 @@ const char& String::CharacterAt(size_t _index) const
 		return _string[_index];
 	}
 	else {
-		return '\0'; 
+		return _string[Length()]; 
 	}
 }
 
@@ -291,7 +291,7 @@ String& String::operator=(const String& _str)
 }
 
 // Returns the character located at index
-char& String::operator[](size_t _index)
+char& String::operator[](size_t _index)			 
 {
 	return _string[_index];
 }
